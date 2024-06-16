@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const clients = ["SHOC", "MRWA", "BCC"];
+        const container = document.getElementById("app");
+
+        const spoofTime = new Date();
+
+        // create buttons
+        clients.forEach((client) => {
+            const button = document.createElement('button');
+            // Set the button text
+            button.innerText = client;
+            button.setAttribute("data-value", client);
+            button.setAttribute("onclick", "handleClientButtonClick(this.dataset.value)");
+
+            // Add the button to the container
+            container.appendChild(button);
+        });
+
+        const spoofData = {
+            "SHOC": {
+                duration: 1.14
+            },
+            "MRWA": {
+                duration: 2
+            }
+        };
+
+        const spoofCurrentData = {
+            "SHOC": spoofTime,
+        };
+
+        const spoofDataString = JSON.stringify(spoofData);
+        // spoof some data first lol
+        localStorage.setItem("times", spoofDataString);
+
+        // check localStorage and display what's in them
+        const spoofCurrentDataString = JSON.stringify(spoofCurrentData);
+        // spoof some data first lol
+        localStorage.setItem("current", spoofCurrentDataString);
+        // check localStorage and display what's in them
+
+        if (localStorage.getItem("times")) {
+            console.log(localStorage.times);
+        }
+
+        if (localStorage.getItem("current")) {
+            console.log(localStorage.current);
+        }
+
+    });
+
+
+    function handleClientButtonClick(button) {
+        const now = new Date();
+        /**
+        check if there is a current client
+        if true end the current client and caluculate the duration
+        if client is the same as clicked client end the current and calculate
+        the duration
+        if no current client start as clicked client
+        */
+
+        let currClient = localStorage.getItem("current");
+        let times = localStorage.getItem("times");
+        let client;
+        let time;
+
+        if (currClient !== undefined) {
+            console.log("currentClient", currClient);
+            let curr = JSON.parse(currClient);
+
+            client = Object.keys(curr);
+            time = Object.values(curr);
+
+        }
+
+        if (client === button) {
+
+        }
+
+
+
+    }
+</script>
+
+</html>
